@@ -1,5 +1,6 @@
 package com.instio.browserandroid;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,16 +32,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         forwardButton.setOnClickListener(this);
         goButton.setOnClickListener(this);
 
+        WebViewClient client = new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                addressBar.setText(url);
+            }
+        };
+
         webView.setWebViewClient(new WebViewClient());
     }
 
     @Override
-    public void onClick(View v) { //this is the acutal button clicked
+    public void onClick(View v) { //this is the actual button clicked
         if (v == backButton) {
-
+            webView.goBack();
         }
         else if (v == forwardButton) {
-
+            webView.goForward();
         }
         else if (v == goButton) {
             String address = addressBar.getText().toString();
@@ -50,4 +58,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             webView.loadUrl(address);
         }
     }
-}
+}//
